@@ -41,6 +41,6 @@ jobs:
           deployment_mode: docker-compose
           copy_stack_file: true
           deploy_path: /root/traefik-deployment
-          stack_file_name: docker-compose.yml
+          stack_file_name: traefik/docker-compose.yml
           keep_files: 5
           args: traefik
