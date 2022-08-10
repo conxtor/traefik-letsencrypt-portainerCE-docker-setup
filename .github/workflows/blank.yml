@@ -24,15 +24,23 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
+      
+      - name: Substitute secrets in file
         uses: jwsi/secret-parser@v1
         with:
           filename: traefik/docker-compose.yml
           secret-name: letsencrypt_email
           secret-value: ${{ secrets.letsencrypt_email }}
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: cat traefik/docker-compose.yml
+      - name: Deploy to Docker swarm
+        uses: wshihadeh/docker-deployment-action@v1
+        with:
+          remote_docker_host: root@conxtor.com
+          ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
+          ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
+          deployment_mode: docker-compose
+          copy_stack_file: true
+          deploy_path: /root/traefik-deployment
+          stack_file_name: docker-compose.yaml
+          keep_files: 5
+          args: traefik
