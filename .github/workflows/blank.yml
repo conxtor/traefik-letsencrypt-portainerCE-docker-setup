@@ -38,9 +38,9 @@ jobs:
           remote_docker_host: root@conxtor.com
           ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
           ssh_public_key: ${{ secrets.DOCKER_SSH_PUBLIC_KEY }}
-          deployment_mode: docker-compose
+          deployment_mode: docker-compose-v2
           copy_stack_file: false
           deploy_path: /root/traefik-deployment
           stack_file_name: traefik/docker-compose.yml
           keep_files: 5
-          args: traefik
+          args: -p traefik
