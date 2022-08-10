@@ -8,3 +8,12 @@ I also don't need high availability or redundancy for any of the services I run,
 
 There are thousands of docker-compose.yml files available on the internet allowing you to run a lot of applications. Of course, you will need to do some changes to them so that they work with this setup, but I will explain everything step by step here.  
 
+## What will I learn in this repository? 
+
+1. Setup Docker on your server (I use Ubuntu 22.04 LTS, so YMMV)
+2. Setup Traefik as a reverse proxy for your applications / workloads on your server with automatic HTTPS via LetsEncrypt. 
+3. Deploy PortainerCE (Community Edition) to easily manage your workloads
+4. Using Github Actions to automate this deployment (if you want!) 
+   1. Github actions themselves
+   2. Using secrets to avoid hardcoding your credentials, passwords, etc in code
+   
