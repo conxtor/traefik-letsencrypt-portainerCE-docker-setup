@@ -33,7 +33,7 @@ jobs:
           secret-value: ${{ secrets.letsencrypt_email }}
 
       - name: Deploy to Docker swarm
-        uses: kerk1v/docker-deployment-action@1.1
+        uses: kerk1v/docker-deployment-action@1.2
         with:
           remote_docker_host: root@conxtor.com
           ssh_private_key: ${{ secrets.DOCKER_SSH_PRIVATE_KEY }}
