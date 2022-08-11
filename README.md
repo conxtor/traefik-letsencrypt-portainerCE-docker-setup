@@ -21,5 +21,6 @@ There are thousands of docker-compose.yml files available on the internet allowi
 
 1. Install Docker engine (CE) on your target server. I follow the official description found [here](https://docs.docker.com/engine/install/ubuntu/), instructions for other distributions are available on the same website as well. 
 2. Install some dependencies: 
+
    `apt install docker-compose b2zip`
 3. 
