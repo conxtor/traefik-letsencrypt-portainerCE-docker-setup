@@ -14,7 +14,7 @@ services:
       - "--certificatesresolvers.acme.acme.httpchallenge=true"
       - "--certificatesresolvers.acme.acme.httpchallenge.entrypoint=web"
       #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
-      - "--certificatesresolvers.acme.acme.email=${{ secrets.letsencrypt_email }}"
+      - "--certificatesresolvers.acme.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.acme.acme.storage=/letsencrypt/acme.json"
       - "--log.filePath=/logs/traefik.log"
       - "--accesslog=true"
