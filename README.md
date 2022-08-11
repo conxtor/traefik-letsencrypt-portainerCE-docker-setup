@@ -25,15 +25,12 @@ There are thousands of docker-compose.yml files available on the internet allowi
 3. Make sure the Docker daemon is running on the host
 4. Clone this repository to a location of choice on your host: `git clone https://github.com/conxtor/traefik-letsencrypt-portainerCE-docker-setup.git`
 
-### 2. Deploy Traefik and PortainerCE
+### 2. Deploy Traefik
 
-1. Traefik: 
-
-
-    ```Traefik needs a location to store the certificates it will receive from LetsEncrypt. It will store them in a JSON file. If we don´t provide a volume, a restart or redeploy of Traefik will trigger a new certificate request to LetsEncrypt servers. If we do that too often, we may hit LetsEncrypt rate limits. The use of a Docker volume for this purpose is recommended, the solution I prefer (and use in this repo) is a bind mount, which is a path on the host which is mounted in the container like any other volume. I use `\data` and then have subdirectories for each of my apps.``` 
+```Traefik needs a location to store the certificates it will receive from LetsEncrypt. It will store them in a JSON file. If we don´t provide a volume, a restart or redeploy of Traefik will trigger a new certificate request to LetsEncrypt servers. If we do that too often, we may hit LetsEncrypt rate limits. The use of a Docker volume for this purpose is recommended, the solution I prefer (and use in this repo) is a bind mount, which is a path on the host which is mounted in the container like any other volume. I use `\data` and then have subdirectories for each of my apps.``` 
 
 
-    ```The same goes for logs, which is taken into consideration here as well. I recommend to store them the same way as indicated above for the LetsEncrypt certificates. ```
+```The same goes for logs, which is taken into consideration here as well. I recommend to store them the same way as indicated above for the LetsEncrypt certificates. ```
     
   1. Change to the directory where you cloned the repository, then change into the folder ´traefik´
   2. Copy the `.env_sample` file to `.env`
