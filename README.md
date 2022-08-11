@@ -22,5 +22,8 @@ There are thousands of docker-compose.yml files available on the internet allowi
 1. Install Docker engine (CE) on your target server. I follow the official description found [here](https://docs.docker.com/engine/install/ubuntu/), instructions for other distributions are available on the same website as well. 
 2. Install some dependencies: 
 
-   `apt install docker-compose b2zip`
-3. 
+   `apt install docker-compose bzip2`
+3. Make sure the Docker daemon is running on the host
+4. Ensure you can login to the remote machine via ssh with a keypair. To simplify things I use a dedicated user called docker-deploy here. Do the following steps: 
+   1. Create the user on the remote machine: `sudo useradd -m -b /var/lib -G docker docker-deploy`
+   2. Create a new keypair 
