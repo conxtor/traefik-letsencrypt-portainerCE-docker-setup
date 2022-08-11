@@ -44,4 +44,4 @@ Part 1 done. Now let´s add Portainer CE, served securely with Traefik, which we
 
 ### 3. Deploy Portainer CE
 
-  1. Change to the directory where you cloned the repository, then change into the folder ´portainer´.
+  1. Change to the directory where you cloned the repository, then change into the folder `portainer`.
