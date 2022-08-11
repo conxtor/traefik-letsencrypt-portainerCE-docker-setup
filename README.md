@@ -17,3 +17,9 @@ There are thousands of docker-compose.yml files available on the internet allowi
    1. Github actions themselves
    2. Using secrets to avoid hardcoding your credentials, passwords, etc in code
    
+### 1. Setup the target server and all prerequisites. 
+
+1. Install Docker engine (CE) on your target server. I follow the official description found [here](https://docs.docker.com/engine/install/ubuntu/), instructions for other distributions are available on the same website as well. 
+2. Install some dependencies: 
+   `apt install docker-compose b2zip`
+3. 
