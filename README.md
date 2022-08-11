@@ -13,17 +13,18 @@ There are thousands of docker-compose.yml files available on the internet allowi
 1. Setup Docker on your server (I use Ubuntu 22.04 LTS, so YMMV)
 2. Setup Traefik as a reverse proxy for your applications / workloads on your server with automatic HTTPS via LetsEncrypt. 
 3. Deploy PortainerCE (Community Edition) to easily manage your workloads
-4. Using Github Actions to automate this deployment (if you want!) 
-   1. Github actions themselves
-   2. Using secrets to avoid hardcoding your credentials, passwords, etc in code
+4. How to modify docker-compose.yml files for automatic HTTPS via Traefik / LetsEncrypt
+5. How to deploy using Portainer manually or automatically from a repository. 
    
 ### 1. Setup the target server and all prerequisites. 
 
 1. Install Docker engine (CE) on your target server. I follow the official description found [here](https://docs.docker.com/engine/install/ubuntu/), instructions for other distributions are available on the same website as well. 
 2. Install some dependencies: 
 
-   `apt install docker-compose bzip2`
+   `apt install docker-compose-plugin`
 3. Make sure the Docker daemon is running on the host
-4. Ensure you can login to the remote machine via ssh with a keypair. To simplify things I use a dedicated user called docker-deploy here. Do the following steps: 
-   1. Create the user on the remote machine: `sudo useradd -m -b /var/lib -G docker docker-deploy`
-   2. Create a new keypair 
+
+### 2. Deploy Traefik and PortainerCE
+
+1. Traefik: 
+  1. Traefik needs a location to store the certificates it will receive from LetsEncrypt. It will store them in a JSON file. If we don´t provide a volume, a restart or redeploy of Traefik will trigger a new certificate request to LetsEncrypt servers. If we do that too often, we may hit LetsEncrypt rate limits. The use of a Docker volume for this purpose is recommended, the solution I prefer (and use in this repo) is a bind mount, which is a path on the host which is mounted in the container like any other volume. I use `\data` and then have subdirectories for each of my apps. 
