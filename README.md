@@ -15,13 +15,14 @@ There are thousands of docker-compose.yml files available on the internet allowi
 3. Deploy PortainerCE (Community Edition) to easily manage your workloads
 4. How to modify docker-compose.yml files for automatic HTTPS via Traefik / LetsEncrypt
 5. How to deploy using Portainer manually or automatically from a repository. 
-   
+
 ### 1. Setup the target server and all prerequisites. 
 
 1. Install Docker engine (CE) on your target server. I follow the official description found [here](https://docs.docker.com/engine/install/ubuntu/), instructions for other distributions are available on the same website as well. 
 2. Install some dependencies: 
 
    `apt install docker-compose-plugin git`
+
 3. Make sure the Docker daemon is running on the host
 4. Clone this repository to a location of choice on your host: `git clone https://github.com/conxtor/traefik-letsencrypt-portainerCE-docker-setup.git`
 
@@ -32,5 +33,14 @@ There are thousands of docker-compose.yml files available on the internet allowi
 
 ```The same goes for logs, which is taken into consideration here as well. I recommend to store them the same way as indicated above for the LetsEncrypt certificates. ```
     
-  1. Change to the directory where you cloned the repository, then change into the folder ´traefik´
-  2. Copy the `.env_sample` file to `.env`
+  1. Change to the directory where you cloned the repository, then change into the folder ´traefik´. 
+  2. Copy the `.env_sample` file to `.env`.
+  3. Create the two directories `/data/traefik/letsencrypt` and `/data/traefik/logs` like `$ mkdir -p /data/traefik/letsencrypt /data/traefik/logs`. 
+  4. Edit the `.env` file and enter your real email for LetsEncrypt registration and certificate expiration reminder emails. 
+  5. Run the following command: `docker compose up -d` to deploy traefik. 
+
+Part 1 done. Now let´s add Portainer CE, served securely with Traefik, which we just installed.
+
+### 3. Deploy Portainer CE
+
+  1. Change to the directory where you cloned the repository, then change into the folder ´portainer´.
