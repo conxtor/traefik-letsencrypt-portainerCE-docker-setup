@@ -16,7 +16,15 @@ services:
       #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.acme.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.acme.acme.storage=/letsencrypt/acme.json"
+      # uncomment the lines below if you want to use a LetsEncrypt Staging issuer for testing
+      # - "--certificatesresolvers.acme-staging.acme.httpchallenge=true"
+      # - "--certificatesresolvers.acme-staging.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.myresolver.acme-staging.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      # - "--certificatesresolvers.acme-staging.acme.email=${ACME_EMAIL}"
+      # - "--certificatesresolvers.acme.acme-staging.storage=/letsencrypt/acme-staging.json"
+      # End of lines for LetsEncrypt Staging issuer
       - "--log.filePath=/logs/traefik.log"
+      # Leave the next two lines alone if you want access logs, if not comment them.
       - "--accesslog=true"
       - "--accesslog.filepath=/logs/access.log"
     ports:
@@ -27,7 +35,9 @@ services:
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
+      # Volume for certificate storage
       - /data/traefik/letsencrypt:/letsencrypt
+      # Volume for logging
       - /data/traefik/logs:/logs
 
 networks:
