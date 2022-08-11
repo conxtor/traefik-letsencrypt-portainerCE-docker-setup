@@ -21,8 +21,9 @@ There are thousands of docker-compose.yml files available on the internet allowi
 1. Install Docker engine (CE) on your target server. I follow the official description found [here](https://docs.docker.com/engine/install/ubuntu/), instructions for other distributions are available on the same website as well. 
 2. Install some dependencies: 
 
-   `apt install docker-compose-plugin`
+   `apt install docker-compose-plugin git`
 3. Make sure the Docker daemon is running on the host
+4. Clone this repository to a location of choice on your host: `git clone https://github.com/conxtor/traefik-letsencrypt-portainerCE-docker-setup.git`
 
 ### 2. Deploy Traefik and PortainerCE
 
@@ -33,3 +34,6 @@ There are thousands of docker-compose.yml files available on the internet allowi
 
 
     ```The same goes for logs, which is taken into consideration here as well. I recommend to store them the same way as indicated above for the LetsEncrypt certificates. ```
+    
+  1. Change to the directory where you cloned the repository, then change into the folder ´traefik´
+  2. Copy the `.env_sample` file to `.env`
