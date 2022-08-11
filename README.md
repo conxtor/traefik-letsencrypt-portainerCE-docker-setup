@@ -37,7 +37,7 @@ There are thousands of docker-compose.yml files available on the internet allowi
   2. Copy the `.env_sample` file to `.env`.
   3. Create the two directories `/data/traefik/letsencrypt` and `/data/traefik/logs` like `$ mkdir -p /data/traefik/letsencrypt /data/traefik/logs`. 
   4. Edit the `.env` file and enter your real email for LetsEncrypt registration and certificate expiration reminder emails. 
-  5. We need to create a Docker network where both Traefki and the containers to be served by Traefik will be attached. Run the following command: `docker network create traefik`
+  5. We need to create a Docker network where both Traefik and the containers to be served by Traefik will be attached. Run the following command: `docker network create traefik`
   5. Run the following command: `docker compose up -d` to deploy Traefik. 
 
 Part 1 done. Now let´s add Portainer CE, served securely with Traefik, which we just installed.
