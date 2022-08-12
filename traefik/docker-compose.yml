@@ -6,7 +6,8 @@ services:
     image: traefik:${TRAEFIK_VERSION}
     # Enables the web UI and tells Traefik to listen to docker
     command:
-      - "--api.insecure=true"
+      # Uncomment the following line if you want to expose the dashboard publically / unsecured. Also see line in the "ports" section
+      # - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
@@ -30,7 +31,9 @@ services:
     ports:
       # The HTTP port
       - "80:80"
+      # The HTTPS port
       - "443:443"
+      # The API / Dashboard port. Uncomment this (and the line above) if you want to expose the dashboard. 
       - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events
