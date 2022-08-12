@@ -6,7 +6,6 @@ services:
     image: traefik:${TRAEFIK_VERSION}
     # Enables the web UI and tells Traefik to listen to docker
     command:
-      # Uncomment the following line if you want to expose the dashboard publically / unsecured. Also see line in the "ports" section
       - "--api.insecure=true"
       - "--providers.docker=true"
       # Expose metrics for Prometheus
@@ -35,6 +34,16 @@ services:
       # Leave the next two lines alone if you want access logs, if not comment them.
       - "--accesslog=true"
       - "--accesslog.filepath=/logs/access.log"
+    labels: 
+      labels:
+        - "traefik.enable=true"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+        - "traefik.http.routers.traefik.rule=Host(`${DASHBOARD_HOSTNAME}`)"
+        - "traefik.http.routers.traefik.entrypoints=websecure"
+        - "traefik.http.routers.traefik.tls.certresolver=acme"
+        - "traefik.http.routers.traefik.service=api@internal"
+        - "traefik.http.routers.traefik.middlewares=traefik-auth"
+        - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_AUTH}"
     networks: 
       - traefik
       - monitoring
@@ -43,8 +52,8 @@ services:
       - "80:80"
       # The HTTPS port
       - "443:443"
-      # The API / Dashboard port. Uncomment this (and the line above) if you want to expose the dashboard. 
-      - "8080:8080"
+      # The API / Dashboard port. Uncomment this (and the line above) if you want to expose the dashboard unprotected. 
+      # - "8080:8080"
     volumes:
       # So that Traefik can listen to the Docker events
       - /var/run/docker.sock:/var/run/docker.sock
