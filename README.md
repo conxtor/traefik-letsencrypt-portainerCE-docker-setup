@@ -1,5 +1,7 @@
 # Setup a server with Docker, Traefik Load Balancer / Reverse Proxy with automatic HTTPS with Letsencrypt and Portainer to manage your workloads easily.
 
+# Work in progress, will be ready in some days! 
+
 For some time, I have been investigating different options for managing multiple services and applications on my host on the Internet.  
 
 Kubernetes or OpenShift / OKR is definitely overkill for my needs, at least at a personal level. [CapRover](https://caprover.com/) is a lightweight PaaS based on Docker Swarm that works great, but has all the limitations of Docker Swarm (concerning privileged containers and some more) and can't be automated end-to-end, including application (service and stack) creation and configuration. 
