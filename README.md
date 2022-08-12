@@ -46,3 +46,7 @@ Part 1 done. Now let´s add Portainer CE, served securely with Traefik, which we
 ### 3. Deploy Portainer CE
 
   1. Change to the directory where you cloned the repository, then change into the folder `portainer`.
+  2. Create the two directories `/data/traefik/letsencrypt` and `/data/traefik/logs` like `$ mkdir -p /data/traefik/letsencrypt /data/traefik/logs`. 
+  3. Copy the `.env_sample` file to `.env`.
+  4. Edit the `.env` file and enter the hostname (complete, including domain) you want to use for your Portainer instance. 
+  5. Run the following command: `docker compose up -d` to deploy Traefik.

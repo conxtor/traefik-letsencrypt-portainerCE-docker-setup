@@ -11,7 +11,7 @@ services:
     labels:
       - "traefik.enable=true"
       # This line sets the hostname for this service in case we need to expose via traefik:
-      - "traefik.http.routers.portainer.rule=Host(`hostname.example.com`)"
+      - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
       # The entrypoint needs to be defined when we deployed Traefik:
       - "traefik.http.routers.portainer.entrypoints=websecure"
       # This value corresponds to the Letsencrypt resolver name defined in Traefik configuration:
