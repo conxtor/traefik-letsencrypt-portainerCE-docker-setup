@@ -6,7 +6,7 @@ services:
     image: traefik:${TRAEFIK_VERSION}
     # Enables the web UI and tells Traefik to listen to docker
     command:
-      - "--api.insecure=true"
+      - "--api.dashboard=true"
       - "--providers.docker=true"
       # Expose metrics for Prometheus
       - "--metrics.prometheus=true"
