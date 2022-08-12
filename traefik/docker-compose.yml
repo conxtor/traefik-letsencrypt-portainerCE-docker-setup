@@ -43,6 +43,7 @@ services:
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_AUTH}"
+      - "traefik.docker.network=traefik"
     networks: 
       - traefik
       - monitoring
