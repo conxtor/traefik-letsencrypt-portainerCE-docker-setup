@@ -7,14 +7,13 @@ services:
     # Enables the web UI and tells Traefik to listen to docker
     command:
       # Uncomment the following line if you want to expose the dashboard publically / unsecured. Also see line in the "ports" section
-      # - "--api.insecure=true"
+      - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.acme.acme.httpchallenge=true"
       - "--certificatesresolvers.acme.acme.httpchallenge.entrypoint=web"
-      #- "--certificatesresolvers.myresolver.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
       - "--certificatesresolvers.acme.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.acme.acme.storage=/letsencrypt/acme.json"
       # uncomment the lines below if you want to use a LetsEncrypt Staging issuer for testing
@@ -24,6 +23,12 @@ services:
       # - "--certificatesresolvers.acme-staging.acme.email=${ACME_EMAIL}"
       # - "--certificatesresolvers.acme.acme-staging.storage=/letsencrypt/acme-staging.json"
       # End of lines for LetsEncrypt Staging issuer
+      #
+      # Lines for permanent system-wide (all containers / hosts) redire"ction from HTTP to HTTPS.
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      # Location of traefik log files
       - "--log.filePath=/logs/traefik.log"
       # Leave the next two lines alone if you want access logs, if not comment them.
       - "--accesslog=true"
