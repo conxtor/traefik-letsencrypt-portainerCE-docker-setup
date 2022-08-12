@@ -1,4 +1,5 @@
 # Setup a server with Docker, Traefik Load Balancer / Reverse Proxy with automatic HTTPS with Letsencrypt and Portainer to manage your workloads easily.
+# Designed to work WITHOUT Docker Swarm. 
 
 # Work in progress, will be ready in some days! 
 
