@@ -9,6 +9,8 @@ services:
       # Uncomment the following line if you want to expose the dashboard publically / unsecured. Also see line in the "ports" section
       - "--api.insecure=true"
       - "--providers.docker=true"
+      # Expose metrics for Prometheus
+      - "--metrics.prometheus=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
@@ -33,6 +35,9 @@ services:
       # Leave the next two lines alone if you want access logs, if not comment them.
       - "--accesslog=true"
       - "--accesslog.filepath=/logs/access.log"
+    networks: 
+      - traefik
+      - monitoring
     ports:
       # The HTTP port
       - "80:80"
@@ -49,6 +54,9 @@ services:
       - /data/traefik/logs:/logs
 
 networks:
-  default:
+  monitoring: 
+    name: monitoring
+    external: true
+  traefik:
     name: traefik
     external: true
