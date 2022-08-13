@@ -23,6 +23,7 @@ services:
       - "traefik.docker.network=traefik"
     networks: 
       - traefik
+      - portainer
     volumes:
       # We need to expose the Docker socket to Portainer or we can't manage anything. 
       - /var/run/docker.sock:/var/run/docker.sock
@@ -33,7 +34,7 @@ services:
     image: portainer/agent:2.14.2
     container_name: portainer-agent
     networks: 
-      - traefik
+      - portainer
     expose:
       - 9100
     volumes: 
@@ -45,3 +46,5 @@ networks:
   traefik:
      external:
        name: traefik
+  portainer: 
+    name: portainer
