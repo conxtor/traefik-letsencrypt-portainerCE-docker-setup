@@ -5,6 +5,7 @@ services:
     # The official v2 Traefik docker image
     image: traefik:${TRAEFIK_VERSION}
     # Enables the web UI and tells Traefik to listen to docker
+    container_name: traefik
     command:
       - "--api.dashboard=true"
       - "--providers.docker=true"

@@ -27,6 +27,15 @@ services:
       # We use a bind mounted volume for persistance so we can upgrade Portainer without data loss. Make sure this directory exists on the host
       - /data/portainer:/data
 
+  portainer-agent:
+    image: portainer/agent:2.14.2
+    container_name: portainer-agent
+    networks: 
+      - traefik
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+
 # we define the Traefik external network in the compose file so we can attach to it. 
 networks:
   default:
