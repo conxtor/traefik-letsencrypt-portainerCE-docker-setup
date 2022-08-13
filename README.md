@@ -1,7 +1,8 @@
 # Setup a server with Docker, Traefik Load Balancer / Reverse Proxy with automatic HTTPS with Letsencrypt and Portainer to manage your workloads easily.
 # Designed to work WITHOUT Docker Swarm. 
+### Stack monitoring: work in progress
 
-# Work in progress, will be ready in some days! 
+# Traefik and Portainer installation ready, Monitoring work in progress! 
 
 For some time, I have been investigating different options for managing multiple services and applications on my host on the Internet.  
 
@@ -43,7 +44,7 @@ There are thousands of docker-compose.yml files available on the internet allowi
   1. Change to the directory where you cloned the repository, then change into the folder ´traefik´. 
   2. Copy the `.env_sample` file to `.env`.
   3. Create the two directories `/data/traefik/letsencrypt` and `/data/traefik/logs` like `$ mkdir -p /data/traefik/letsencrypt /data/traefik/logs`. 
-  4. Generate a password to protect access to the Traefik dashboard: `echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g`
+  4. Generate a password to protect access to the Traefik dashboard: `echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g` (MD5, secure) or `htpasswd -snb volkerk Ctas2020` (SHA, less secure)
   4. Edit the `.env` file and enter your real email for LetsEncrypt registration and certificate expiration reminder emails, Traefik Dashboard hostname and Traefik Dashboard credentials 
   5. Run the following command: `docker compose up -d` to deploy Traefik. 
 
@@ -52,7 +53,7 @@ Part 1 done. Now let´s add Portainer CE, served securely with Traefik, which we
 ### 3. Deploy Portainer CE
 
   1. Change to the directory where you cloned the repository, then change into the folder `portainer`.
-  2. Create the two directories `/data/traefik/letsencrypt` and `/data/traefik/logs` like `$ mkdir -p /data/traefik/letsencrypt /data/traefik/logs`. 
+  2. Create the directoriy `/data/portainer` like `$ mkdir -p /data/portainer`. 
   3. Copy the `.env_sample` file to `.env`.
   4. Edit the `.env` file and enter the hostname (complete, including domain) you want to use for your Portainer instance. 
   5. Run the following command: `docker compose up -d` to deploy Traefik.
