@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.enable=true"
-      # This line sets the hostname for this service in case we need to expose via traefik:
+      # This line sets the hostname for this service in case we need to expose via traefik. Set in .env file:
       - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
       # The entrypoint needs to be defined when we deployed Traefik:
       - "traefik.http.routers.portainer.entrypoints=websecure"

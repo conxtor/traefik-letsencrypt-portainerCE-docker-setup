@@ -15,6 +15,7 @@ services:
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.acme.acme.httpchallenge=true"
       - "--certificatesresolvers.acme.acme.httpchallenge.entrypoint=web"
+      # Set ACME_EMAIl variable in .env file: 
       - "--certificatesresolvers.acme.acme.email=${ACME_EMAIL}"
       - "--certificatesresolvers.acme.acme.storage=/letsencrypt/acme.json"
       # uncomment the lines below if you want to use a LetsEncrypt Staging issuer for testing
@@ -38,11 +39,13 @@ services:
     labels: 
       - "traefik.enable=true"
       - "traefik.http.services.traefik.loadbalancer.server.port=888"
+      # Set variable DASHBOARD_HOSTNAME in .env file: 
       - "traefik.http.routers.traefik.rule=Host(`${DASHBOARD_HOSTNAME}`)"
       - "traefik.http.routers.traefik.entrypoints=websecure"
       - "traefik.http.routers.traefik.tls.certresolver=acme"
       - "traefik.http.routers.traefik.service=api@internal"
       - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      # Set variable DASHBOARD_AUTH in .env file: 
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_AUTH}"
     networks: 
       - traefik
@@ -55,7 +58,7 @@ services:
       # The API / Dashboard port. Uncomment this (and the line above) if you want to expose the dashboard unprotected. 
       # - "8080:8080"
     volumes:
-      # So that Traefik can listen to the Docker events
+      # for Traefik to listen to the Docker events, we need to mount the local Docker socket: 
       - /var/run/docker.sock:/var/run/docker.sock
       # Volume for certificate storage
       - /data/traefik/letsencrypt:/letsencrypt
