@@ -21,6 +21,8 @@ services:
       - "traefik.http.services.portainer.loadbalancer.server.port=9000"
       # if we have more than one network in the docker-compose file, we have to specify the traefik network. 
       - "traefik.docker.network=traefik"
+    networks: 
+      - traefik
     volumes:
       # We need to expose the Docker socket to Portainer or we can't manage anything. 
       - /var/run/docker.sock:/var/run/docker.sock
