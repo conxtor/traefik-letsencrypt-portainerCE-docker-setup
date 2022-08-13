@@ -31,7 +31,11 @@ There are thousands of docker-compose.yml files available on the internet allowi
 4. Clone this repository to a location of choice on your host: `git clone https://github.com/conxtor/traefik-letsencrypt-portainerCE-docker-setup.git`
 5. The DNS of all hostnames you want to serve with Traefik / SSL will need to point to the server where you install this. I am using a wildcard DNS entry so I don't have to maintain each and every hostname manually. Automatic LetsEncrypt certificate issuing and renewal WON'T work without properly configured DNS. 
 6. Create two Docker networks named "traefik" and "monitoring". More on that later, but for now, run: 
+
+
    `docker network create traefik`
+
+
    `docker network create monitoring` 
 
 ### 2. Deploy Traefik
