@@ -33,6 +33,8 @@ services:
   portainer-agent:
     image: portainer/agent:2.14.2
     container_name: portainer-agent
+    environment:
+      AGENT_CLUSTER_ADDR: tasks.portainer_agent
     networks: 
       - portainer
     expose:
