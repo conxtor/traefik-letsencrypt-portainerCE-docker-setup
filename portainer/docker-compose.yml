@@ -38,6 +38,6 @@ services:
 
 # we define the Traefik external network in the compose file so we can attach to it. 
 networks:
-  default:
+  traefik:
      external:
        name: traefik
