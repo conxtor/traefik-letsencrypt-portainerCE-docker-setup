@@ -34,6 +34,7 @@ services:
       # Leave the next two lines alone if you want access logs, if not comment them.
       - "--accesslog=true"
       - "--accesslog.filepath=/logs/access.log"
+    restart: unless-stopped
     labels: 
       - "traefik.enable=true"
       - "traefik.http.services.traefik.loadbalancer.server.port=888"

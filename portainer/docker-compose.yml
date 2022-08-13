@@ -8,6 +8,7 @@ services:
     # We have to enable HTTP in Portainer because Traefik doesn't know how to talk to a HTTPS backend: 
     command:
       - "--http-enabled"
+    restart: unless-stopped
     labels:
       - "traefik.enable=true"
       # This line sets the hostname for this service in case we need to expose via traefik:
