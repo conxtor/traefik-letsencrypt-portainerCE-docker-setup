@@ -34,6 +34,8 @@ services:
     container_name: portainer-agent
     networks: 
       - traefik
+    expose:
+      - 9100
     volumes: 
       - /var/run/docker.sock:/var/run/docker.sock
       - /var/lib/docker/volumes:/var/lib/docker/volumes
