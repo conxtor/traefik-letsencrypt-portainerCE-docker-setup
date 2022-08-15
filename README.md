@@ -1,8 +1,8 @@
 # Setup a server with Docker, Traefik Load Balancer / Reverse Proxy with automatic HTTPS with Letsencrypt and Portainer to manage your workloads easily.
 # Designed to work WITHOUT Docker Swarm. 
-### Stack monitoring: work in progress
+### For monitoring, see my repo https://github.com/conxtor/docker-monitoring (work in progress)
 
-# Traefik and Portainer installation ready, Monitoring work in progress! 
+## Traefik and Portainer installation ready. 
 
 For some time, I have been investigating different options for managing multiple services and applications on my host on the Internet.  
 
@@ -43,10 +43,16 @@ There are thousands of docker-compose.yml files available on the internet allowi
 
 ### 2. Deploy Traefik
 
-```Traefik needs a location to store the certificates it will receive from LetsEncrypt. It will store them in a JSON file. If we don´t provide a volume, a restart or redeploy of Traefik will trigger a new certificate request to LetsEncrypt servers. If we do that too often, we may hit LetsEncrypt rate limits. The use of a Docker volume for this purpose is recommended, the solution I prefer (and use in this repo) is a bind mount, which is a path on the host which is mounted in the container like any other volume. I use `\data` and then have subdirectories for each of my apps.``` 
+---
+>  **NOTE**
 
 
-```The same goes for logs, which is taken into consideration here as well. I recommend to store them the same way as indicated above for the LetsEncrypt certificates. ```
+> Traefik needs a location to store the certificates it will receive from LetsEncrypt. It will store them in a JSON file. If we don´t provide a volume, a restart or redeploy of Traefik will trigger a new certificate request to LetsEncrypt servers. If we do that too often, we may hit LetsEncrypt rate limits. The use of a Docker volume for this purpose is recommended, the solution I prefer (and use in this repo) is a bind mount, which is a path on the host which is mounted in the container like any other volume. I use `\data` and then have subdirectories for each of my apps.
+
+
+> The same goes for logs, which is taken into consideration here as well. I recommend to store them the same way as indicated above for the LetsEncrypt certificates.
+
+---
     
   1. Change to the directory where you cloned the repository, then change into the folder ´traefik´. 
   2. Copy the `.env_sample` file to `.env`.
