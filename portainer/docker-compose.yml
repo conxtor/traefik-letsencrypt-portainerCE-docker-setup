@@ -1,0 +1,52 @@
+version: '3.3'
+
+services:
+  portainer:
+    # Update with current version, if needed. I'm not a fan of using "latest" tag, also it's considered bad practice. 
+    image: "portainer/portainer-ce:2.14.2"
+    container_name: "portainer"
+    # We have to enable HTTP in Portainer because Traefik doesn't know how to talk to a HTTPS backend: 
+    command:
+      - "--http-enabled"
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      # This line sets the hostname for this service in case we need to expose via traefik. Set in .env file:
+      - "traefik.http.routers.portainer.rule=Host(`${PORTAINER_HOSTNAME}`)"
+      # The entrypoint needs to be defined when we deployed Traefik:
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      # This value corresponds to the Letsencrypt resolver name defined in Traefik configuration:
+      - "traefik.http.routers.portainer.tls.certresolver=acme"
+      # This line defines the port exposed by the service so that Traefik can find it:
+      - "traefik.http.services.portainer.loadbalancer.server.port=9000"
+      # if we have more than one network in the docker-compose file, we have to specify the traefik network. 
+      - "traefik.docker.network=traefik"
+    networks: 
+      - traefik
+      - portainer
+    volumes:
+      # We need to expose the Docker socket to Portainer or we can't manage anything. 
+      - /var/run/docker.sock:/var/run/docker.sock
+      # We use a bind mounted volume for persistance so we can upgrade Portainer without data loss. Make sure this directory exists on the host
+      - /data/portainer:/data
+
+  portainer-agent:
+    image: portainer/agent:2.14.2
+    container_name: portainer-agent
+    environment:
+      AGENT_CLUSTER_ADDR: tasks.portainer_agent
+    networks: 
+      - portainer
+    expose:
+      - 9100
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+
+# we define the Traefik external network in the compose file so we can attach to it. 
+networks:
+  traefik:
+     external:
+       name: traefik
+  portainer: 
+    name: portainer

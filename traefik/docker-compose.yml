@@ -1,0 +1,78 @@
+version: '3.3'
+
+services:
+  traefik:
+    # The official v2 Traefik docker image
+    image: traefik:${TRAEFIK_VERSION}
+    # Enables the web UI and tells Traefik to listen to docker
+    container_name: traefik
+    command:
+      - "--api.dashboard=true"
+      - "--providers.docker=true"
+      # Expose metrics for Prometheus
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.addEntryPointsLabels=true"
+      - "--metrics.prometheus.addrouterslabels=true"
+      - "--metrics.prometheus.addServicesLabels=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.acme.acme.httpchallenge=true"
+      - "--certificatesresolvers.acme.acme.httpchallenge.entrypoint=web"
+      # Set ACME_EMAIl variable in .env file: 
+      - "--certificatesresolvers.acme.acme.email=${ACME_EMAIL}"
+      - "--certificatesresolvers.acme.acme.storage=/letsencrypt/acme.json"
+      # uncomment the lines below if you want to use a LetsEncrypt Staging issuer for testing
+      # - "--certificatesresolvers.acme-staging.acme.httpchallenge=true"
+      # - "--certificatesresolvers.acme-staging.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.myresolver.acme-staging.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      # - "--certificatesresolvers.acme-staging.acme.email=${ACME_EMAIL}"
+      # - "--certificatesresolvers.acme.acme-staging.storage=/letsencrypt/acme-staging.json"
+      # End of lines for LetsEncrypt Staging issuer
+      #
+      # Lines for permanent system-wide (all containers / hosts) redire"ction from HTTP to HTTPS.
+      - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entryPoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      # Location of traefik log files
+      - "--log.filePath=/logs/traefik.log"
+      # Leave the next two lines alone if you want access logs, if not comment them.
+      - "--accesslog=true"
+      - "--accesslog.filepath=/logs/access.log"
+    restart: unless-stopped
+    labels: 
+      - "traefik.enable=true"
+      - "traefik.http.services.traefik.loadbalancer.server.port=888"
+      # Set variable DASHBOARD_HOSTNAME in .env file: 
+      - "traefik.http.routers.traefik.rule=Host(`${DASHBOARD_HOSTNAME}`)"
+      - "traefik.http.routers.traefik.entrypoints=websecure"
+      - "traefik.http.routers.traefik.tls.certresolver=acme"
+      - "traefik.http.routers.traefik.service=api@internal"
+      - "traefik.http.routers.traefik.middlewares=traefik-auth"
+      # Set variable DASHBOARD_AUTH in .env file: 
+      - "traefik.http.middlewares.traefik-auth.basicauth.users=${DASHBOARD_AUTH}"
+    networks: 
+      - traefik
+      - monitoring
+    ports:
+      # The HTTP port
+      - "80:80"
+      # The HTTPS port
+      - "443:443"
+      # The API / Dashboard port. Uncomment this (and the line above) if you want to expose the dashboard unprotected. 
+      # - "8080:8080"
+    volumes:
+      # for Traefik to listen to the Docker events, we need to mount the local Docker socket: 
+      - /var/run/docker.sock:/var/run/docker.sock
+      # Volume for certificate storage
+      - /data/traefik/letsencrypt:/letsencrypt
+      # Volume for logging
+      - /data/traefik/logs:/logs
+
+networks:
+  monitoring: 
+    name: monitoring
+    external: true
+  traefik:
+    name: traefik
+    external: true
